@@ -7,31 +7,20 @@ RESTRICT="mirror"
 inherit eutils vcs-snapshot
 
 DESCRIPTION="Scripts to support compressed swap devices or ramdisks with zram"
-HOMEPAGE="https://github.com/vaeth/zram-init/"
-SRC_URI="http://github.com/vaeth/${PN}/tarball/release-${PV} -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/phunehehe/gentoo-zram"
+SRC_URI="https://github.com/phunehehe/gentoo-zram/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="zsh-completion"
-
-src_prepare() {
-	epatch_user
-}
 
 src_install() {
-	dosbin sbin/*
-	doinitd openrc/init.d/*
-	doconfd openrc/conf.d/*
-	if use zsh-completion
-	then	insinto /usr/share/zsh/site-functions
-		doins zsh/*
-	fi
+	doinitd openrc/init.d/zram
 }
 
 pkg_postinst() {
 	elog
-	elog "To use zram, activate it in your kernel and add it to default runlevel:"
+	elog "To use zram, enable it in your kernel and add it to default runlevel:"
 	elog "rc-config add zram default"
 	elog
 }
